@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ public class EmployeeController {
     @PostMapping()
     @ResponseStatus(value = HttpStatus.CREATED)
     public Employee addEmployee(@RequestBody Employee employee){
-
         return employeeRepository.addEmployee(employee);
     }
 
@@ -47,10 +45,6 @@ public class EmployeeController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteEmployee(@PathVariable Long id){
         Employee employeeById = employeeRepository.findById(id);
-
-        if(employeeById == null) {
-            throw new EmployeeNotFoundException();
-        }
         employeeRepository.deleteEmployee(employeeById);
     }
     @GetMapping(params = {"pageNumber","pageSize"})

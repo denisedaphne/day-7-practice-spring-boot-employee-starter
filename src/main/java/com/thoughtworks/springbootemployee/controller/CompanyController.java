@@ -1,7 +1,5 @@
 package com.thoughtworks.springbootemployee.controller;
 
-
-import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -36,6 +34,7 @@ public class CompanyController {
         return employeeRepository.findByCompanyId(employeesCompanyId);
     }
     @GetMapping(params = {"pageNumber","pageSize"})
+    @ResponseStatus(value = HttpStatus.CREATED)
     public List<Company> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize){
         return companyRepository.listByPage(pageNumber, pageSize);
     }
@@ -53,10 +52,6 @@ public class CompanyController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable Long id){
         Company companyById = companyRepository.findById(id);
-
-        if(companyById == null) {
-            throw new CompanyNotFoundException();
-        }
         companyRepository.deleteCompany(companyById);
     }
 }
